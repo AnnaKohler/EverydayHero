@@ -9,6 +9,12 @@ public class Objective {
     private String Details;
     private int days;
 
+    Objective(String s){
+        this.Title=s;
+        this.days=0;
+        this.Details="";
+    }
+
     public String getTitle() {
         return Title;
     }
@@ -32,4 +38,5 @@ public class Objective {
     public void setDays(int days) {
         this.days = days;
     }
+
 }

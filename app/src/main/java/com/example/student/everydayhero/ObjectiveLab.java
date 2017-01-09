@@ -35,5 +35,12 @@ public class ObjectiveLab {
         }
         return null;
     }
+    Objective obj0=new Objective("The First One");
+    Objective obj1=new Objective("The Second One");
+    Objective obj2=new Objective("The Third One");
+    Objective obj3=new Objective("The Fourth One");
+    Objective obj4=new Objective("The Fifth One");
+
+
 
 }
