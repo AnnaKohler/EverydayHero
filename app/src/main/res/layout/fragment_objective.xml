@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:text="TextView"
+        android:id="@+id/separatorDetails"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:layout_below="@+id/progressBar"
+        android:layout_marginTop="32dp"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="?android:attr/actionModeSelectAllDrawable"
+        android:id="@+id/imageButton"
+        style="@android:style/Widget.Holo.ImageButton"
+        android:background="@android:drawable/menuitem_background"
+        android:contextClickable="false"
+        android:layout_alignTop="@+id/txtTitle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <TextView
+        android:text="ObjGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageButton"
+
+        android:id="@+id/txtGroupTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:text="ObjTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTitle"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:text="TxtProgressLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtProgressLine"
+        android:layout_below="@+id/separatorProgress"
+        android:layout_toLeftOf="@+id/imageButton"
+        android:layout_alignLeft="@+id/separatorProgress"
+        android:layout_alignStart="@+id/separatorProgress"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="8dp"/>
+
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_below="@+id/txtProgressLine"
+        android:layout_alignLeft="@+id/txtTitle"
+        android:layout_alignStart="@+id/txtTitle"
+        android:layout_toLeftOf="@+id/txtProgress"
+        android:layout_toStartOf="@+id/txtProgress"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:text="Progress days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtProgress"
+        android:layout_alignBottom="@+id/progressBar"
+        android:layout_alignRight="@+id/txtProgressLine"
+        android:layout_alignEnd="@+id/txtProgressLine"/>
+
+    <TextView
+        android:text="Progress"
+        android:layout_height="wrap_content"
+        android:id="@+id/separatorProgress"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/txtGroupTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:text="TxtDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDetails"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:layout_below="@+id/separatorDetails"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:layout_alignRight="@+id/txtProgress"
+        android:layout_alignEnd="@+id/txtProgress"/>
+
+    <Button
+        android:text="@string/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnEdit"
+        android:layout_below="@+id/txtDetails"
+        android:layout_alignRight="@+id/imageButton"
+        android:layout_alignEnd="@+id/imageButton"
+        android:layout_marginTop="8dp"/>
+
+</RelativeLayout>

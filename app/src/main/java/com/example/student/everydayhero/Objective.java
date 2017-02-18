@@ -1,18 +1,40 @@
 package com.example.student.everydayhero;
 
+import java.util.Date;
+
 /**
  * Created by student1 on 09.01.17.
  */
 
 public class Objective {
-    private String Title;
+    private String Title="";
+    private String Group="";
     private String Details;
-    private int days;
+    private int duration;
+    private int done;
+    private Date beginDate;
+    private Date endDate;
 
     Objective(String s){
         this.Title=s;
-        this.days=0;
+        this.duration=1;
         this.Details="";
+        beginDate=new Date();
+        endDate=new Date();
+
+    }
+    Objective(){
+        this.Title="";
+        this.duration=1;
+        this.Details="";
+        beginDate=new Date();
+        endDate=new Date();
+
+    }
+    public String getGroup() { return Group; }
+
+    public void setGroup(String group) {
+        Group = group;
     }
 
     public String getTitle() {
@@ -31,12 +53,19 @@ public class Objective {
         Details = details;
     }
 
-    public int getDays() {
-        return days;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setDays(int days) {
-        this.days = days;
+    public void setDuration(int days) {
+        this.duration = days;
     }
 
+    public int getDone() {
+        return done;
+    }
+
+    public void setDone(int done) {
+        this.done = done;
+    }
 }

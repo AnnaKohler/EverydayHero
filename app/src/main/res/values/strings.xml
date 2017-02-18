@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">EverydayHero</string>
+    <string name="title_activity_objective_list">Your Objectives</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_button">Edit This Objective</string>
+    <string name="separator_details">DETAILS</string>
+    <string name="separator_progress">PROGRESS</string>
+    <string name="separator_duration">DURATION SETTINGS</string>
+    <string name="progress">Objective Progress:</string>
+    <string name="ReviewActivityTitle">Objective Review</string>
 </resources>

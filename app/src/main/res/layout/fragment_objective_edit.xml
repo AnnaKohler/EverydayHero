@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="?android:attr/actionModeSelectAllDrawable"
+        android:id="@+id/imageButton"
+        style="@android:style/Widget.Holo.ImageButton"
+        android:background="@android:drawable/menuitem_background"
+        android:contextClickable="false"
+        android:layout_alignTop="@+id/txtTitle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <EditText
+        android:text="ObjTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTitle"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+
+    <TextView
+        android:text="@string/separator_duration"
+        android:layout_height="wrap_content"
+        android:id="@+id/separatorProgress"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/txtTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:text="TxtDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDetails"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:layout_below="@+id/separatorDetails"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:layout_alignRight="@+id/txtProgress"
+        android:layout_alignEnd="@+id/txtProgress"/>
+
+    <TextView
+        android:text="TextView"
+        android:id="@+id/separatorDetails"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/separatorProgress"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:text="TxtProgressLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtProgressLine"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:layout_below="@+id/separatorProgress"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+</RelativeLayout>

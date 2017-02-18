@@ -16,9 +16,20 @@ public class ObjectiveLab {
     private static ObjectiveLab sObjectiveLab;
     private Context mAppContext;
 
+
     private ObjectiveLab(Context AppContext){
         mAppContext=AppContext;
         mObjectives=new ArrayList<Objective>();
+
+        for(int i=0; i<10; i++){
+            Objective o =new Objective(String.valueOf(i));
+            o.setTitle(""+i);
+            o.setDuration(i+1);
+            o.setDetails("Details: I want that text to be very-very long so it takes a few lines");
+            o.setGroup("Group Number " + i%2);
+            o.setDone(o.getDuration()/2+i%2);
+            mObjectives.add(o);
+        }
     }
 
     public static ObjectiveLab get(Context c){
@@ -27,20 +38,17 @@ public class ObjectiveLab {
         }
         return sObjectiveLab;
     }
+    public ArrayList<Objective> getObjectives(){
+        return mObjectives;
+    }
     public Objective getObjective(String ObjTitle){
         for(Objective o: mObjectives){
-            if(o.getTitle()==ObjTitle){
+            if(o.getTitle().equals(ObjTitle)){
                 return o;
             }
         }
         return null;
     }
-    Objective obj0=new Objective("The First One");
-    Objective obj1=new Objective("The Second One");
-    Objective obj2=new Objective("The Third One");
-    Objective obj3=new Objective("The Fourth One");
-    Objective obj4=new Objective("The Fifth One");
-
 
 
 }
