@@ -2,10 +2,6 @@ package com.example.student.everydayhero;
 
 import java.util.Date;
 
-/**
- * Created by student1 on 09.01.17.
- */
-
 public class Objective {
     private String Title="";
     private String Group="";
@@ -64,8 +60,23 @@ public class Objective {
     public int getDone() {
         return done;
     }
-
     public void setDone(int done) {
         this.done = done;
+    }
+
+    public Date getBeginDate() {
+        return beginDate;
+    }
+
+    public void setBeginDate(Date beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

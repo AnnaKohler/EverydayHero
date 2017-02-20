@@ -8,8 +8,11 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
@@ -40,6 +43,9 @@ public class ObjectiveFragment extends Fragment {
     private TextView txtProgress;
     private ProgressBar progressBar;
     private boolean edit=false;
+    private EditText durationDays;
+    private EditText startingDate;
+
 
 
     @Override
@@ -99,13 +105,29 @@ public class ObjectiveFragment extends Fragment {
         }
         View v= inflater.inflate(R.layout.fragment_objective_edit, container, false);
 
-        txtDetails = (TextView) v.findViewById(R.id.txtDetails);
+        txtDetails = (EditText) v.findViewById(R.id.txtDetails);
         txtDetails.setText(mObjective.getDetails());
         txtDetails.setHint("You can add some details here");
         txtDetails.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 
         separatorDetails = (TextView) v.findViewById(R.id.separatorDetails);
         separatorDetails.setText(R.string.separator_details);
+
+        txtTitle=(EditText)v.findViewById(R.id.txtTitle);
+        txtTitle.setText(mObjective.getTitle());
+
+        durationDays=(EditText)v.findViewById(R.id.editDays);
+        durationDays.setText(mObjective.getDuration()+"");
+
+        startingDate=(EditText)v.findViewById(R.id.editDate);
+        startingDate.setText(mObjective.getBeginDate().toString());
+
+        Spinner dateSpinnner=(Spinner) v.findViewById(R.id.dateSpinner);
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(),
+                R.array.startingDates,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dateSpinnner.setAdapter(adapter);
 
         return v;
     }
