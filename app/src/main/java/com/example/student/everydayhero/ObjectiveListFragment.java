@@ -40,6 +40,7 @@ public class ObjectiveListFragment extends ListFragment {
         ObjectiveAdapter adapter=new ObjectiveAdapter(mObjectives);
         setListAdapter(adapter);
     }
+
     private class ObjectiveAdapter extends ArrayAdapter<Objective>{
 
         public ObjectiveAdapter(ArrayList<Objective> Objectives){

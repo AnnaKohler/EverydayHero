@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,6 @@ public class ObjectiveFragment extends Fragment {
     private TextView txtProgress;
     private ProgressBar progressBar;
     private boolean edit=false;
-    private int ObjLayout = R.layout.fragment_objective;
 
 
     @Override
@@ -89,10 +89,9 @@ public class ObjectiveFragment extends Fragment {
             editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(getActivity(), ObjectiveReviewActivity.class);
+                    Intent i = new Intent(getActivity(), ObjectiveEditActivity.class);
                     i.putExtra(EXTRA_OBJECTIVE_EDIT, true);
                     i.putExtra(EXTRA_OBJECTIVE_ID, mObjective.getTitle());
-                    getActivity().finish();
                     startActivity(i);
                 }
             });
@@ -100,7 +99,13 @@ public class ObjectiveFragment extends Fragment {
         }
         View v= inflater.inflate(R.layout.fragment_objective_edit, container, false);
 
+        txtDetails = (TextView) v.findViewById(R.id.txtDetails);
+        txtDetails.setText(mObjective.getDetails());
+        txtDetails.setHint("You can add some details here");
+        txtDetails.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 
+        separatorDetails = (TextView) v.findViewById(R.id.separatorDetails);
+        separatorDetails.setText(R.string.separator_details);
 
         return v;
     }

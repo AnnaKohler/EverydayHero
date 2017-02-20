@@ -10,4 +10,5 @@ public class ObjectiveListActivity extends SingleFragmentActivity {
     protected Fragment createFragment(){
         return new ObjectiveListFragment();
     }
+    
 }

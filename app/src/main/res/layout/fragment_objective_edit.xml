@@ -25,13 +25,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtTitle"
+
         style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="31dp"
         android:layout_marginTop="16dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:maxLength="12"
+        android:lines="1"
+        android:inputType="textCapSentences"/>
 
 
     <TextView
@@ -46,7 +50,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
-    <TextView
+    <EditText
         android:text="TxtDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,7 +62,10 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="8dp"
         android:layout_alignRight="@+id/txtProgress"
-        android:layout_alignEnd="@+id/txtProgress"/>
+        android:layout_alignEnd="@+id/txtProgress"
+        android:lines="3"
+        android:maxLength="140"
+        android:textSize="16sp"/>
 
     <TextView
         android:text="TextView"
@@ -67,19 +74,66 @@
         android:paddingStart="16dp"
         android:paddingLeft="16dp"
         android:layout_marginTop="32dp"
-        android:layout_below="@+id/separatorProgress"
+        android:layout_below="@+id/txtDurationStarting"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
     <TextView
-        android:text="TxtProgressLine"
+        android:text="@string/duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtProgressLine"
+        android:id="@+id/txtChallengeDuration"
         android:paddingStart="16dp"
         android:paddingLeft="16dp"
-        android:layout_below="@+id/separatorProgress"
+        android:layout_alignBaseline="@+id/editText"
+        android:layout_alignBottom="@+id/editText"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="000"
+        android:textColorHint="#00FFFFFF"
+        android:maxLength="4"
+        android:id="@+id/editText"
+        android:layout_below="@+id/separatorProgress"
+        android:layout_toRightOf="@id/txtChallengeDuration"
+        android:layout_toEndOf="@id/txtChallengeDuration"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"/>
+
+    <TextView
+        android:text="@string/duration_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDurationDays"
+        android:layout_alignBaseline="@+id/editText"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toRightOf="@+id/editText"
+        android:layout_toEndOf="@+id/editText"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"/>
+
+    <TextView
+        android:text="@string/duration_starting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtChallengeDuration"
+        android:layout_alignLeft="@+id/txtTitle"
+        android:layout_alignStart="@+id/txtTitle"
+
+        android:id="@+id/txtDurationStarting"
+        android:layout_marginTop="8dp"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtDurationStarting"
+        android:layout_toRightOf="@+id/txtDurationStarting"
+        android:layout_toEndOf="@+id/txtDurationStarting"
+        android:id="@+id/spinner2"/>
 
 </RelativeLayout>
