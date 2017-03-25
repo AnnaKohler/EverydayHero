@@ -20,8 +20,15 @@
         <item>Tomorrow</item>
         <item>Pick Date&#8230;</item>
     </string-array>
+    <string name="title_activity_main_tab">EverydayHero</string>
 
-
+    <string name="sectGoals">OBJECTIVES</string>
+    <string name="sectToday">TODAY</string>
+    <string name="sectProfile">MY PROFILE</string>
+    <string name="welcome_text">Welcome Friend! Glad to see you.</string>
+    <string name="btnContinue">Let\'s go!</string>
+    <string name="surname_hint">Enter your surname</string>
+    <string name="name_hint">Enter your name</string>
 
 
 </resources>

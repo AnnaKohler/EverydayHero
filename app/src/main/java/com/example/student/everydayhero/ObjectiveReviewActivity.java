@@ -9,10 +9,13 @@ import android.support.v4.app.Fragment;
 public class ObjectiveReviewActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
-        boolean edit = getIntent().getBooleanExtra(ObjectiveFragment.EXTRA_OBJECTIVE_EDIT, false);
-        String objectiveId = getIntent().getStringExtra(ObjectiveFragment.EXTRA_OBJECTIVE_ID);
-        return ObjectiveFragment.newInstance(objectiveId, edit);
+        int mode = getIntent().getIntExtra(ObjectiveFragment.EXTRA_OBJECTIVE_MODE, 0);
+        if(mode!=2){
+            String objectiveId = getIntent().getStringExtra(ObjectiveFragment.EXTRA_OBJECTIVE_ID);
+            return ObjectiveFragment.newInstance(objectiveId, mode);
+        }
+        return ObjectiveFragment.newInstance(mode);
 
-        //return ObjectiveEditFragment.newInstance(); //Как передать аргументы между фрагментами? TODO:Аргументы
+
     }
 }

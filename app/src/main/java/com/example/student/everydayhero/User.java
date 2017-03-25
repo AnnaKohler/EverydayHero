@@ -1,5 +1,7 @@
 package com.example.student.everydayhero;
 
+import android.content.Context;
+
 /**
  * Created by student1 on 09.01.17.
  */
@@ -9,6 +11,23 @@ public class User {
     private String name;
     private float weight;
     private float height;
+
+    private static User sUser;
+
+    private Context mAppContext;
+
+    private User(Context context){
+        mAppContext=context;
+        age=18;
+        name="";
+        weight=1;
+        height=1;
+    }
+
+    public static User getProfile(Context context){
+        if(sUser==null) sUser = new User(context);
+        return sUser;
+    }
 
     public int getAge() {
         return age;

@@ -31,6 +31,9 @@ public class ObjectiveLab {
             mObjectives.add(o);
         }
     }
+    public static void add(Objective o){
+        sObjectiveLab.mObjectives.add(o);
+    }
 
     public static ObjectiveLab get(Context c){
         if (sObjectiveLab ==null){

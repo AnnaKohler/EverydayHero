@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -26,10 +25,10 @@ public class ObjectiveListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Objective o = ((ObjectiveAdapter)getListAdapter()).getItem(position);
-        Log.d("LIST_ITEM ", o.getTitle() + " was clicked");
+
         Intent i = new Intent(getActivity(), ObjectiveReviewActivity.class);
         i.putExtra(ObjectiveFragment.EXTRA_OBJECTIVE_ID, o.getTitle());
-        i.putExtra(ObjectiveFragment.EXTRA_OBJECTIVE_EDIT, false);
+        i.putExtra(ObjectiveFragment.EXTRA_OBJECTIVE_MODE, 0);
         startActivity(i);
     }
 
@@ -39,6 +38,10 @@ public class ObjectiveListFragment extends ListFragment {
         mObjectives=ObjectiveLab.get(getActivity().getApplicationContext()).getObjectives();
         ObjectiveAdapter adapter=new ObjectiveAdapter(mObjectives);
         setListAdapter(adapter);
+    }
+    public void onResume(){
+        super.onResume();
+        ((ObjectiveAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     private class ObjectiveAdapter extends ArrayAdapter<Objective>{
@@ -67,7 +70,6 @@ public class ObjectiveListFragment extends ListFragment {
             OptionsBtn.setFocusableInTouchMode(false);
 
             return convertView;
-
 
         }
 
