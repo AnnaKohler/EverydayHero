@@ -21,7 +21,6 @@
         android:layout_marginLeft="8dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/ic_more_vert_black_24dp"
-
         />
 
     <TextView
