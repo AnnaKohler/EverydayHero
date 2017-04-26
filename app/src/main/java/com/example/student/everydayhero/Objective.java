@@ -3,11 +3,12 @@ package com.example.student.everydayhero;
 import java.util.Date;
 
 public class Objective {
+    private int _id;
     private String Title="";
     private String Group="";
     private String Details;
     private int duration;
-    private int done;
+    private int doneDays;
     private Date beginDate;
     private Date endDate;
 
@@ -58,10 +59,10 @@ public class Objective {
     }
 
     public int getDone() {
-        return done;
+        return doneDays;
     }
     public void setDone(int done) {
-        this.done = done;
+        this.doneDays = done;
     }
 
     public Date getBeginDate() {
@@ -78,5 +79,13 @@ public class Objective {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public int getID() {
+        return this._id;
+    }
+
+    public void setID(int id) {
+        this._id = id;
     }
 }

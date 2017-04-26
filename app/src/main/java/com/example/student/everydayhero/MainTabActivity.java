@@ -12,21 +12,27 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+
 public class MainTabActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
+    private DBHandler mDBHandler;
     private final String preference_file_key="MySharedPreference";
     public final String SHP_FIRST_RUN="com.everydayhero.first_run";
     public static String EXTRA_OBJECTIVE_ID="com.everydayhero.objective_id";
     public static String EXTRA_OBJECTIVE_MODE="com.everydayhero.objective_mode";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Set up DBHandler
+        mDBHandler=new DBHandler(getApplicationContext());
 
         SharedPreferences settings=getSharedPreferences(preference_file_key, MODE_PRIVATE);
 
@@ -77,7 +83,11 @@ public class MainTabActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+
                 fab.setVisibility(position==0?View.VISIBLE:View.INVISIBLE);
+                if(position==0){
+
+                }
 
             }
 
@@ -91,7 +101,9 @@ public class MainTabActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         mViewPager.getAdapter().notifyDataSetChanged();
+        Log.d("DATABASE ROWS COUNT: ", ""+mDBHandler.getObjectivesCount()); //TODO: убрать после отладки
 
     }
 
@@ -131,7 +143,13 @@ public class MainTabActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch(position){
-                case 0: return new ObjectiveListFragment();
+                case 0:
+                    /*if(mDBHandler.getObjectivesCount()==0){
+                    return new noObjectivesFragment();
+                    }
+                    else*/
+                    return new ObjectiveListFragment();
+
 
                 case 1: return new TodayFragment();
 

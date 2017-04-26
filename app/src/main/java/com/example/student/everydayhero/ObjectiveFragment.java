@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-/**
- * Created by Anna on 27.01.2017.
- */
 
 public class ObjectiveFragment extends Fragment {
 
@@ -58,6 +55,7 @@ public class ObjectiveFragment extends Fragment {
     private EditText durationDays;
     private EditText startingDate;
     private ImageButton btnDone;
+    private DBHandler mDBHandler;
 
 
 
@@ -66,10 +64,12 @@ public class ObjectiveFragment extends Fragment {
         super.onCreate(savedInstanceState);
         int objectiveMode=getArguments().getInt(EXTRA_OBJECTIVE_MODE);
         objMode=objectiveMode;
+        mDBHandler=new DBHandler(getContext());
 
         if(objectiveMode!=2){
-            String objectiveId=getArguments().getString(EXTRA_OBJECTIVE_ID);
-            mObjective=ObjectiveLab.get(getActivity()).getObjective(objectiveId);
+            int objectiveId=getArguments().getInt(EXTRA_OBJECTIVE_ID);
+            Log.e("ATTENTION", "onCreate: OBJECTIVEID="+objectiveId);
+            mObjective=mDBHandler.getAllObjectives().get(objectiveId);
         }
     }
 
@@ -191,22 +191,27 @@ public class ObjectiveFragment extends Fragment {
                         mObjective.setTitle(txtTitle.getText().toString());
                         mObjective.setDetails(txtDetails.getText().toString());
 
-                        if(durationDays.getText().toString().equals("")){
+                        if (mObjective.getTitle().equals("")){
                             Toast toast = Toast.makeText(getActivity(),
-                                    "Enter the objective's duration!", Toast.LENGTH_SHORT);
+                                    "Enter the objective's title!", Toast.LENGTH_SHORT);
                             toast.show();
                         }
                         else {
-                            mObjective.setDuration(Integer.parseInt(durationDays.getText().toString()));
+                            mObjective.setTitle(txtTitle.getText().toString());
 
-                            if (mObjective.getTitle().equals("")) {
+
+                            if (durationDays.getText().toString().equals("")) {
                                 Toast toast = Toast.makeText(getActivity(),
-                                        "Enter the objective's title!", Toast.LENGTH_SHORT);
+                                        "Enter the objective's duration!", Toast.LENGTH_SHORT);
                                 toast.show();
                             } else {
+                                mObjective.setDuration(Integer.parseInt(durationDays.getText().toString()));
                                 //Intent i = new Intent(getActivity(), MainTabActivity.class);
-                                ObjectiveLab.get(getActivity()).add(mObjective);
+                                mDBHandler.addObjective(mObjective);
+                                //ObjectiveLab.get(getActivity()).add(mObjective);
                                 //startActivity(i);
+
+                                Log.d("DATABASE ROWS COUNT: ", ""+mDBHandler.getObjectivesCount()); //TODO: убрать после отладки
                                 getActivity().finish();
                             }
                         }

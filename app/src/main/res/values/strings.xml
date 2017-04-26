@@ -22,13 +22,18 @@
     </string-array>
     <string name="title_activity_main_tab">EverydayHero</string>
 
+    <!--MainTabActivity-->
     <string name="sectGoals">OBJECTIVES</string>
     <string name="sectToday">TODAY</string>
     <string name="sectProfile">MY PROFILE</string>
+
+    <!--WelcomeFragment-->
     <string name="welcome_text">Welcome Friend! Glad to see you.</string>
     <string name="btnContinue">Let\'s go!</string>
     <string name="surname_hint">Enter your surname</string>
     <string name="name_hint">Enter your name</string>
 
+    <!--No Objectives yet? Fragment-->
+    <string name="noObjectives">No objectives yet? Start with something small :)</string>
 
 </resources>
