@@ -5,15 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +41,6 @@ public class ObjectiveFragment extends Fragment {
 
     private Objective mObjective;
     private TextView txtTitle;
-    private Spinner spnStartDate;
     private TextView txtGroup;
     private TextView separatorDetails;
     private TextView separatorProgress;
@@ -53,7 +50,6 @@ public class ObjectiveFragment extends Fragment {
     private ProgressBar progressBar;
     private int objMode=0;
     private EditText durationDays;
-    private EditText startingDate;
     private ImageButton btnDone;
     private DBHandler mDBHandler;
 
@@ -68,7 +64,7 @@ public class ObjectiveFragment extends Fragment {
 
         if(objectiveMode!=2){
             int objectiveId=getArguments().getInt(EXTRA_OBJECTIVE_ID);
-            Log.e("ATTENTION", "onCreate: OBJECTIVEID="+objectiveId);
+
             mObjective=mDBHandler.getAllObjectives().get(objectiveId);
         }
     }
@@ -108,7 +104,7 @@ public class ObjectiveFragment extends Fragment {
                 progressBar.setProgress(100 / mObjective.getDuration() * mObjective.getDone());
 
 
-                Button editBtn = (Button) v.findViewById(R.id.btnEdit);
+                ImageView editBtn = (ImageView) v.findViewById(R.id.imgEdit);
                 editBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -116,6 +112,7 @@ public class ObjectiveFragment extends Fragment {
                         i.putExtra(EXTRA_OBJECTIVE_MODE, 1);
                         i.putExtra(EXTRA_OBJECTIVE_ID, mObjective.getTitle());
                         startActivity(i);
+                        getActivity().finish();
 
                     }
                 });
@@ -124,7 +121,7 @@ public class ObjectiveFragment extends Fragment {
 
             case 1:
                 v = inflater.inflate(R.layout.fragment_objective_edit, container, false);
-
+                getActivity().setTitle("Objective Edit");
                 txtDetails = (EditText) v.findViewById(R.id.txtDetails);
                 txtDetails.setText(mObjective.getDetails());
                 txtDetails.setHint("You can add some details here");
@@ -153,7 +150,7 @@ public class ObjectiveFragment extends Fragment {
                         mObjective.setTitle(txtTitle.getText().toString());
                         mObjective.setDetails(txtDetails.getText().toString());
                         mObjective.setDuration(Integer.parseInt(durationDays.getText().toString()));
-
+                        mDBHandler.updateObjective(mObjective);
                         Intent i = new Intent(getActivity(), ObjectiveReviewActivity.class);
                         i.putExtra(EXTRA_OBJECTIVE_ID, mObjective.getTitle());
                         i.putExtra(EXTRA_OBJECTIVE_MODE, 0);
@@ -206,13 +203,12 @@ public class ObjectiveFragment extends Fragment {
                                 toast.show();
                             } else {
                                 mObjective.setDuration(Integer.parseInt(durationDays.getText().toString()));
-                                //Intent i = new Intent(getActivity(), MainTabActivity.class);
+                                Intent i = new Intent(getActivity(), MainTabActivity.class);
                                 mDBHandler.addObjective(mObjective);
-                                //ObjectiveLab.get(getActivity()).add(mObjective);
-                                //startActivity(i);
 
-                                Log.d("DATABASE ROWS COUNT: ", ""+mDBHandler.getObjectivesCount()); //TODO: убрать после отладки
-                                getActivity().finish();
+                                startActivity(i);
+
+                                //getActivity().finish();
                             }
                         }
                     }

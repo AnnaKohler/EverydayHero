@@ -13,9 +13,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
         app:srcCompat="@drawable/ic_checked"/>
 
     <TextView
@@ -25,8 +26,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/btnDone"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginStart="0dp"
         android:text="TextView"
         android:textSize="20sp"/>
 
@@ -48,9 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/txtDaysProgress"
         android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="0dp"
         android:layout_toLeftOf="@+id/txtDaysProgress"/>
 
 </RelativeLayout>

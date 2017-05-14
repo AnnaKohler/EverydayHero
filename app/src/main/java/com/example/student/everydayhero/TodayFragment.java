@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +35,9 @@ public class TodayFragment extends Fragment {
     private String formatedString;
     private int mMood;
     private TextView txtDate;
+
     private SimpleDateFormat mDateFormatter;
-    private ArrayList<Objective> mObjectives;
+
     private ArrayList<Objective> crntObjectives;
     private DBHandler mDBHandler;
     private CurrentObjectivesAdapter mAdapter;
@@ -43,12 +45,13 @@ public class TodayFragment extends Fragment {
 
     public class CurrentObjectivesAdapter extends ArrayAdapter<Objective>{
         private final Context context;
+        private ArrayList<Objective> objectives;
 
+        public CurrentObjectivesAdapter(Context c, ArrayList<Objective> crntobjectives){
 
-        public CurrentObjectivesAdapter(Context c){
-
-            super(c, 0, crntObjectives);
+            super(c, 0, crntobjectives);
             context=c;
+            objectives=crntobjectives;
         }
 
         @NonNull
@@ -57,29 +60,45 @@ public class TodayFragment extends Fragment {
             if(convertView==null){
                 convertView=getActivity().getLayoutInflater().inflate(R.layout.list_item_crntobjective, null);
             }
-            final Objective o = crntObjectives.get(position);
-            ImageView btnDone=(ImageView) convertView.findViewById(R.id.btnDone);
+            Objective o = objectives.get(position);
+            final ImageView btnDone=(ImageView) convertView.findViewById(R.id.btnDone);
             TextView txtTitle=(TextView)convertView.findViewById(R.id.txtObjectiveTitle);
             txtTitle.setText(o.getTitle());
             TextView txtDays=(TextView)convertView.findViewById(R.id.txtDaysProgress);
             txtDays.setText(o.getDone()+"/"+o.getDuration());
+            ProgressBar progress=(ProgressBar)convertView.findViewById(R.id.progressBar);
+            progress.setProgress(100 / o.getDuration() * o.getDone());
 
             btnDone.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
-                    o.setDone(o.getDone()+1);
-                    mDBHandler.updateObjective(o);
-                    Toast t = Toast.makeText(context, R.string.hoorayExclamation, Toast.LENGTH_LONG);
-                    crntObjectives.remove(position);
-                    this.notifyAll();
-                    t.show();
+                        Objective o = objectives.get(position);
+                    if (o.getDuration() != o.getDone()) {
+                        o.setDone(o.getDone() + 1);
+                        mDBHandler.updateObjective(o);
+                        Toast t;
+                        if (o.getDuration() != o.getDone()) {
+                            t = Toast.makeText(context, R.string.hoorayExclamation, Toast.LENGTH_SHORT);
+                        } else {
+                            t = Toast.makeText(context, R.string.didExclamation, Toast.LENGTH_SHORT);
+
+                        }
+                        t.show();
+
+                        btnDone.setClickable(false);
+                        crntObjectives.remove(position);
+                        onResume();
+                    }
+                    else btnDone.setClickable(false);
                 }
+
             });
             return convertView;
         }
     }
 
-    public static TodayFragment newInstance(Long date_millis){
+    public static TodayFragment newInstance(){
         Bundle args=new Bundle();
         args.putLong(EXTRA_TODAY_DATE_MILLIS, (new Date().getTime()));
 
@@ -112,11 +131,12 @@ public class TodayFragment extends Fragment {
         formatedString=mDateFormatter.format(mDate);
 
         mDBHandler=new DBHandler(getContext());
-        mObjectives=(ArrayList<Objective>) mDBHandler.getAllObjectives();
+
         crntObjectives=new ArrayList<>();
 
-        if(mObjectives.size()!=0) {
-            for (Objective o : mObjectives) {
+        if(mDBHandler.getAllObjectives().size()!=0) {
+            for (Objective o : mDBHandler.getAllObjectives()) {
+
                 //Adding days to start date
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(o.getBeginDate());
@@ -129,31 +149,59 @@ public class TodayFragment extends Fragment {
             }
         }
 
-        mAdapter=new CurrentObjectivesAdapter(getActivity());
+
+        mAdapter=new CurrentObjectivesAdapter(getActivity(), crntObjectives);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onResume() {
+
+        mAdapter.clear();
+        mAdapter.addAll(crntObjectives);
         mAdapter.notifyDataSetChanged();
+
         super.onResume();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        listCrnt=(ListView)getActivity().findViewById(R.id.listview);
-        if(listCrnt!=null){
-            View v=inflater.inflate(R.layout.fragment_today, container, false);
+        View v=inflater.inflate(R.layout.fragment_today, container, false);
+
+        crntObjectives=new ArrayList<>();
+        if(mDBHandler.getAllObjectives().size()!=0) {
+            crntObjectives.clear();
+            for (Objective o :mDBHandler.getAllObjectives()) {
+                //Adding days to start date
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(o.getBeginDate());
+                cal.add(Calendar.DATE, o.getDuration() - 1);
+                Date endDate = cal.getTime();
+
+                if (isDateBetween(o.getBeginDate(), endDate, new Date())) {
+                    crntObjectives.add(o);
+                }
+            }
+        }
+
+        listCrnt=(ListView)v.findViewById(R.id.listview);
+
+        listCrnt.setAdapter(new CurrentObjectivesAdapter(getActivity(), crntObjectives));
+
+
+        if(crntObjectives.size()!=0){
+
             txtDate=(TextView) v.findViewById(R.id.txtTodayDate);
             txtDate.setText(formatedString);
+
             listCrnt.setClickable(false);
             listCrnt.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
+            return v;
+
         }
-        View v = inflater.inflate(R.layout.fragment_no_tasks, container, false);
-
-
+        v = inflater.inflate(R.layout.fragment_no_tasks, container, false);
         return v;
     }
 }

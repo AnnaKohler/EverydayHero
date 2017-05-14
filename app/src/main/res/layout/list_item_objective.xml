@@ -9,19 +9,6 @@
                 android:paddingRight="16dp"
                 android:paddingEnd="16dp"
                 android:descendantFocusability="blocksDescendants">
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnOptions"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@id/imageButton"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        app:srcCompat="@drawable/ic_more_vert_black_24dp"
-        />
 
     <TextView
         android:text="TextView"

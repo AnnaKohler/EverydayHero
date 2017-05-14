@@ -9,7 +9,6 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,9 +19,8 @@ public class ObjectiveListFragment extends ListFragment {
 
     private DBHandler mDBHandler;
 
-    private static final String TABLE_OBJECTIVES = "objectives";
     private ObjectiveListAdapter mListAdapter;
-    private ArrayList<Objective> mObjectives;
+
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
@@ -40,20 +38,22 @@ public class ObjectiveListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         mDBHandler=new DBHandler(getContext());
-        mObjectives=(ArrayList<Objective>) mDBHandler.getAllObjectives();
-        mListAdapter=new ObjectiveListAdapter();
-        this.setListAdapter(mListAdapter);
+        mListAdapter=new ObjectiveListAdapter((ArrayList<Objective>) mDBHandler.getAllObjectives());
+        setListAdapter(mListAdapter);
     }
     public void onResume(){
+
+        /*mListAdapter=new ObjectiveListAdapter((ArrayList<Objective>) mDBHandler.getAllObjectives());
+        ((ObjectiveListAdapter)getListAdapter()).notifyDataSetChanged();*/
         super.onResume();
-        ((ObjectiveListAdapter)getListAdapter()).notifyDataSetChanged();
+        mListAdapter.updateItems((ArrayList<Objective>) mDBHandler.getAllObjectives());
     }
 
 
     class ObjectiveListAdapter extends ArrayAdapter<Objective>{
-
-        public ObjectiveListAdapter(){
-            super(getActivity(), 0, mObjectives);
+        private ArrayList<Objective> mObjectives;
+        public ObjectiveListAdapter(ArrayList<Objective> objectives){
+            super(getActivity(), 0, objectives);
         }
 
         @NonNull
@@ -62,15 +62,20 @@ public class ObjectiveListFragment extends ListFragment {
             if(convertView==null){
                 convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_objective, null);
             }
-            Objective objective = mObjectives.get(position);
+            Objective objective = mDBHandler.getAllObjectives().get(position);
 
             TextView txtTitle = (TextView) convertView.findViewById(R.id.txtViewTitle);
             txtTitle.setText(objective.getTitle());
             TextView txtGroup = (TextView) convertView.findViewById(R.id.txtViewGroup);
             txtGroup.setText(objective.getGroup());
-            ImageButton btnOptions = (ImageButton) convertView.findViewById(R.id.btnOptions); //TODO: возможность удалять цели
+            //ImageButton btnOptions = (ImageButton) convertView.findViewById(R.id.btnOptions); //TODO: возможность удалять цели
 
             return convertView;
+        }
+
+        public void updateItems(ArrayList<Objective> objectives){
+            this.mObjectives=objectives;
+            notifyDataSetChanged();
         }
     }
 

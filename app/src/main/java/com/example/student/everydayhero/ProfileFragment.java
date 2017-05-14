@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment {
         txtName.setText(mUser.getName());
         txtAge.setText(mUser.getAge()+"");
 
-        txtBMI.setText((mUser.getWeight() /(mUser.getHeight()*mUser.getHeight())+""));
+        txtBMI.setText((mUser.getWeight() /(mUser.getHeight()* mUser.getHeight())+""));
 
         /*
 

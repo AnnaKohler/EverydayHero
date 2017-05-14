@@ -119,14 +119,15 @@
         android:layout_alignRight="@+id/txtProgress"
         android:layout_alignEnd="@+id/txtProgress"/>
 
-    <Button
-        android:text="@string/edit_button"
+    <ImageView
+        android:id="@+id/imgEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnEdit"
+        android:layout_alignEnd="@+id/txtDetails"
+        android:layout_alignRight="@+id/txtDetails"
         android:layout_below="@+id/txtDetails"
-        android:layout_alignRight="@+id/imageButton"
-        android:layout_alignEnd="@+id/imageButton"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="16dp"
+        android:elevation="6dp"
+        app:srcCompat="@drawable/ic_file"/>
 
 </RelativeLayout>

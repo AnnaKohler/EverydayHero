@@ -15,8 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.Date;
-
 
 public class MainTabActivity extends AppCompatActivity {
 
@@ -72,6 +70,7 @@ public class MainTabActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplication(), ObjectiveReviewActivity.class);
                 i.putExtra(EXTRA_OBJECTIVE_MODE, 2);
                 startActivity(i);
+                finish();
 
             }
         });
@@ -147,7 +146,7 @@ public class MainTabActivity extends AppCompatActivity {
                     return new ObjectiveListFragment();
 
 
-                case 1: return TodayFragment.newInstance(new Date().getTime()); //pass the Date in case there will be another dates review
+                case 1: return TodayFragment.newInstance(); //pass the Date in case there will be another dates review
                 case 2: return ProfileFragment.newInstance(false); //Profile edit=false
             }
             return null;

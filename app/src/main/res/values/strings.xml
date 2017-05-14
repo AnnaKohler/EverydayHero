@@ -27,6 +27,9 @@
     <string name="sectToday">TODAY</string>
     <string name="sectProfile">MY PROFILE</string>
 
+    <!--ObjectiveEdit-->
+    <string name="objEdit">Objective Edit</string>
+
     <!--WelcomeFragment-->
     <string name="welcome_text">Hello, </string>
     <string name="welcome_text_learnmore">Let us learn \n something more about you! </string>
@@ -48,6 +51,7 @@
 
     <!--TodayFragment-->
     <string name="hoorayExclamation">Yay!</string>
+    <string name="didExclamation">Yay! You did it!</string>
     <string name="noTasks">You have  no tasks\n for today.</string>
 
 </resources>
