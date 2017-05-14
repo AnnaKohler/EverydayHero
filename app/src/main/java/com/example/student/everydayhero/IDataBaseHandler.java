@@ -11,8 +11,13 @@ public interface IDataBaseHandler {
     Objective getObjective(int id);
     List<Objective> getAllObjectives();
     int getObjectivesCount();
+    User getUserInfo();
     int updateObjective(Objective objective);
+    int updateUser(User user);
     void deleteObjective(Objective objective);
+    void deleteUserInfo(User user);
     void deleteAll();
+    boolean checkForTables(String tableName);
+
 
 }

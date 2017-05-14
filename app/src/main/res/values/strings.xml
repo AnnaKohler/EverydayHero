@@ -28,12 +28,26 @@
     <string name="sectProfile">MY PROFILE</string>
 
     <!--WelcomeFragment-->
-    <string name="welcome_text">Welcome Friend! Glad to see you.</string>
+    <string name="welcome_text">Hello, </string>
+    <string name="welcome_text_learnmore">Let us learn \n something more about you! </string>
     <string name="btnContinue">Let\'s go!</string>
-    <string name="surname_hint">Enter your surname</string>
     <string name="name_hint">Enter your name</string>
+    <string name="height_hint">Enter your height (m)</string>
+    <string name="weight_hint">Enter your weight (kg)</string>
+    <string name="age_hint">Enter your age</string>
+
 
     <!--No Objectives yet? Fragment-->
-    <string name="noObjectives">No objectives yet? Start with something small :)</string>
+    <string name="noObjectives">No objectives yet?\nStart with something small :)</string>
+
+    <!--ProfileFragment-->
+    <string name="achievements">YOUR ACHIEVEMENTS</string>
+    <string name="profileDetails">DETAILS</string>
+    <string name="profileAge">Your Age:</string>
+    <string name="profileBMI">Your BMI:</string>
+
+    <!--TodayFragment-->
+    <string name="hoorayExclamation">Yay!</string>
+    <string name="noTasks">You have  no tasks\n for today.</string>
 
 </resources>

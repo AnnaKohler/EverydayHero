@@ -1,6 +1,6 @@
 package com.example.student.everydayhero;
 
-import android.content.Context;
+import java.util.Date;
 
 /**
  * Created by student1 on 09.01.17.
@@ -9,24 +9,31 @@ import android.content.Context;
 public class User {
     private int age;
     private String name;
+    private Date lastSeen;
     private float weight;
     private float height;
 
+
     private static User sUser;
 
-    private Context mAppContext;
 
-    private User(Context context){
-        mAppContext=context;
+
+    public User(){
         age=18;
         name="";
+        lastSeen=new Date();
+        lastSeen.setHours(0);
         weight=1;
         height=1;
     }
 
-    public static User getProfile(Context context){
-        if(sUser==null) sUser = new User(context);
-        return sUser;
+
+    public Date getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(Date lastSeen) {
+        this.lastSeen = lastSeen;
     }
 
     public int getAge() {

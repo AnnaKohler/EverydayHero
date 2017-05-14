@@ -18,7 +18,8 @@ import java.util.List;
 public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
 
     private static final int DATABASE_VERSION=1;
-    private static final String DATABASE_NAME="objectivesDB";
+    private static final String DATABASE_NAME="everydayhero";
+
     private static final String TABLE_OBJECTIVES = "objectives";
 
     private static final String KEY_ID = "_id";
@@ -28,6 +29,15 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
     private static final String KEY_DURATION = "obj_duration";
     private static final String KEY_DONE_DAYS = "obj_done_days";
     private static final String KEY_BEG_DATE="obj_begin_date";
+
+    //TABLE USER:
+
+    private static final String TABLE_USER="user";
+    private static final String KEY_NAME = "username";
+    private static final String KEY_AGE = "age";
+    private static final String KEY_HEIGHT = "height";
+    private static final String KEY_WEIGHT = "weight";
+    private static final String KEY_LASTSEEN = "lastseen";
 
 
     public DBHandler(Context context) {
@@ -42,16 +52,25 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
                 +KEY_DURATION +" INTEGER,"+ KEY_DONE_DAYS +" INTEGER" +")";
 
         db.execSQL(CREATE_OBJECTIVES_TABLE);
+
+        String CREATE_USER_TABLE="CREATE TABLE " + TABLE_USER + "(" + KEY_ID +" bool PRIMARY KEY DEFAULT TRUE," + KEY_NAME+ " TEXT," +KEY_AGE+ " INTEGER,"
+                +KEY_HEIGHT + " REAL," + KEY_WEIGHT + " REAL,"
+                + KEY_LASTSEEN +" INTEGER" + ")";
+        db.execSQL(CREATE_USER_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_OBJECTIVES);
         onCreate(db);
+
+        db.execSQL("DROP TABLE IF EXISTS " +TABLE_USER);
+        onCreate(db);
     }
 
     @Override
     public void addObjective(Objective objective) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values= new ContentValues();
 
@@ -63,6 +82,20 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
         values.put(KEY_DONE_DAYS, objective.getDone());
 
         db.insert(TABLE_OBJECTIVES, null, values);
+        db.close();
+    }
+
+    public void addUser(User user){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values= new ContentValues();
+
+        values.put(KEY_NAME, user.getName());
+        values.put(KEY_AGE, user.getAge());
+        values.put(KEY_HEIGHT, user.getHeight());
+        values.put(KEY_WEIGHT, user.getWeight());
+        values.put(KEY_LASTSEEN, user.getLastSeen().getTime());
+
+        db.insert(TABLE_USER, null, values);
         db.close();
     }
 
@@ -97,6 +130,22 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
     }
 
     @Override
+    public User getUserInfo() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_USER, null);
+        User user = new User();
+        if(cursor.moveToFirst()){
+            user.setName(cursor.getString(1));
+            user.setAge(Integer.parseInt(cursor.getString(2)));
+            user.setHeight(Float.parseFloat(cursor.getString(3)));
+            user.setWeight(Float.parseFloat(cursor.getString(4)));
+            user.setLastSeen(new Date(Long.valueOf(cursor.getString(5))));
+            user.getLastSeen().setHours(0);
+        }
+        return user;
+    }
+
+    @Override
     public List<Objective> getAllObjectives() {
         List<Objective> objectiveList=new ArrayList<>();
         String selectQuery="SELECT * FROM "+TABLE_OBJECTIVES;
@@ -121,6 +170,7 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
         return objectiveList;
     }
 
+
     @Override
     public int updateObjective(Objective objective) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -135,12 +185,29 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
         return db.update(TABLE_OBJECTIVES, cv, KEY_ID+" = ?", new String[]{String.valueOf(objective.getID())});
 
     }
+    public int updateUser(User user){
+        SQLiteDatabase db= this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_NAME, user.getName());
+        cv.put(KEY_AGE, user.getAge());
+        cv.put(KEY_HEIGHT, user.getHeight());
+        cv.put(KEY_AGE, user.getWeight());
+        cv.put(KEY_LASTSEEN, user.getLastSeen().getTime());
+
+        return db.update(TABLE_USER, cv, null, null);
+    }
 
     @Override
     public void deleteObjective(Objective objective) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_OBJECTIVES, KEY_ID+" = ?", new String[]{String.valueOf(objective.getID())});
         db.close();
+    }
+
+    @Override
+    public void deleteUserInfo(User user) {
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.delete(TABLE_USER, null, null);
     }
 
     @Override
@@ -165,4 +232,24 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
 
     }
 
+
+    public boolean checkForTables(String tableName){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " +tableName, null);
+
+        if(cursor != null){
+
+            cursor.moveToFirst();
+
+            int count = cursor.getInt(0);
+
+            if(count > 0){
+                return true;
+            }
+
+            cursor.close();
+        }
+        return false;
+    }
 }

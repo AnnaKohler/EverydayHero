@@ -10,22 +10,19 @@ public class Objective {
     private int duration;
     private int doneDays;
     private Date beginDate;
-    private Date endDate;
+
 
     Objective(String s){
         this.Title=s;
         this.duration=1;
         this.Details="";
         beginDate=new Date();
-        endDate=new Date();
-
     }
     Objective(){
         this.Title="";
         this.duration=1;
         this.Details="";
         beginDate=new Date();
-        endDate=new Date();
 
     }
     public String getGroup() { return Group; }
@@ -73,13 +70,6 @@ public class Objective {
         this.beginDate = beginDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
 
     public int getID() {
         return this._id;

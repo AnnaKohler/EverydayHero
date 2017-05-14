@@ -27,10 +27,10 @@ public class ObjectiveFragment extends Fragment {
         return fragment;
     }
 
-    public static ObjectiveFragment newInstance(String title, int mode){
+    public static ObjectiveFragment newInstance(int ID, int mode){
         Bundle args=new Bundle();
         args.putInt(EXTRA_OBJECTIVE_MODE, mode);
-        args.putString(EXTRA_OBJECTIVE_ID, title);
+        args.putInt(EXTRA_OBJECTIVE_ID, ID);
 
         ObjectiveFragment fragment = new ObjectiveFragment();
         fragment.setArguments(args);

@@ -1,7 +1,6 @@
 package com.example.student.everydayhero;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -12,19 +11,17 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.util.Date;
 
 
 public class MainTabActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private DBHandler mDBHandler;
-    private final String preference_file_key="MySharedPreference";
-    public final String SHP_FIRST_RUN="com.everydayhero.first_run";
-    public static String EXTRA_OBJECTIVE_ID="com.everydayhero.objective_id";
     public static String EXTRA_OBJECTIVE_MODE="com.everydayhero.objective_mode";
 
 
@@ -32,16 +29,18 @@ public class MainTabActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Set up DBHandler
-        mDBHandler=new DBHandler(getApplicationContext());
+        if(mDBHandler==null) {
+            mDBHandler = new DBHandler(getApplicationContext());
+        }
 
-        SharedPreferences settings=getSharedPreferences(preference_file_key, MODE_PRIVATE);
-
-        if(settings.getBoolean(SHP_FIRST_RUN, true)){
+        if(!mDBHandler.checkForTables("user")){
             Intent i=new Intent(this, WelcomeActivity.class);
-            settings.edit().putBoolean(SHP_FIRST_RUN, false).apply();
             startActivity(i);
             finish();
         }
+
+
+
 
         setContentView(R.layout.activity_main_tab);
 
@@ -56,8 +55,12 @@ public class MainTabActivity extends AppCompatActivity {
 
         mViewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+
+        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+
+        tabs.setupWithViewPager(mViewPager);
+
+
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,10 +88,6 @@ public class MainTabActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
 
                 fab.setVisibility(position==0?View.VISIBLE:View.INVISIBLE);
-                if(position==0){
-
-                }
-
             }
 
             @Override
@@ -103,8 +102,6 @@ public class MainTabActivity extends AppCompatActivity {
         super.onResume();
 
         mViewPager.getAdapter().notifyDataSetChanged();
-        Log.d("DATABASE ROWS COUNT: ", ""+mDBHandler.getObjectivesCount()); //TODO: убрать после отладки
-
     }
 
     @Override
@@ -144,15 +141,13 @@ public class MainTabActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch(position){
                 case 0:
-                    /*if(mDBHandler.getObjectivesCount()==0){
+                    if(mDBHandler.getObjectivesCount()==0){
                     return new noObjectivesFragment();
                     }
-                    else*/
                     return new ObjectiveListFragment();
 
 
-                case 1: return new TodayFragment();
-
+                case 1: return TodayFragment.newInstance(new Date().getTime()); //pass the Date in case there will be another dates review
                 case 2: return ProfileFragment.newInstance(false); //Profile edit=false
             }
             return null;

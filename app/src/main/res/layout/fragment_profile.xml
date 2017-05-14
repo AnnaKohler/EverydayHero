@@ -1,15 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-    <TextView
-        android:text="TextView"
+
+    <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:id="@+id/txtUserName"/>
+        android:layout_marginTop="16dp"
+        app:srcCompat="@drawable/ic_woman4"/>
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/separatorProfileDetails"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/txtName"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/profileDetails"
+            android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/txtProfileAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/separatorProfileDetails"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/profileAge"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/txtProfileBMI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtProfileAge"
+        android:layout_alignStart="@+id/txtProfileAge"
+        android:layout_below="@+id/txtProfileAge"
+        android:layout_marginTop="10dp"
+        android:text="@string/profileBMI"
+        android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/separatorAchievements"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/txtProfileBMI"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/achievements"
+            android:textSize="16sp"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/separatorAchievements"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/trophy1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_trophy_grey"/>
+
+        <ImageView
+            android:id="@+id/trophy2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_trophy_grey"/>
+
+        <ImageView
+            android:id="@+id/trophy3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_trophy_grey"/>
+    </LinearLayout>
+
+        <TextView
+            android:id="@+id/dataProfileAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtProfileAge"
+            android:layout_alignBottom="@+id/txtProfileAge"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/txtProfileAge"
+            android:layout_toRightOf="@+id/txtProfileAge"
+            android:text="TextView"
+            android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/dataProfileBMI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:layout_above="@+id/separatorAchievements"
+        android:layout_alignLeft="@+id/dataProfileAge"
+        android:layout_alignStart="@+id/dataProfileAge"/>
 </RelativeLayout>
+</ScrollView>

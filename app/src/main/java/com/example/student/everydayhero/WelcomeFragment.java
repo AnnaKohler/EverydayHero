@@ -17,12 +17,17 @@ import android.widget.EditText;
 public class WelcomeFragment extends Fragment {
     private Button btnContinue;
     private EditText editName;
-
+    private EditText editHeight;
+    private EditText editWeight;
+    private EditText editAge;
+    private DBHandler mDBHandler;
+    private User mUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mUser = new User();
+        mDBHandler=new DBHandler(getContext());
     }
 
     @Nullable
@@ -31,11 +36,19 @@ public class WelcomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_welcome, container, false);
         btnContinue=(Button)v.findViewById(R.id.btnContinue);
         editName=(EditText)v.findViewById(R.id.editName);
+        editHeight=(EditText)v.findViewById(R.id.editHeight);
+        editWeight=(EditText)v.findViewById(R.id.editWeight);
+        editAge=(EditText)v.findViewById(R.id.editAge);
+
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User.getProfile(getActivity()).setName(editName.getText().toString());
+                mUser.setName(editName.getText().toString());
+                mUser.setHeight(Float.parseFloat(editHeight.getText().toString()));
+                mUser.setWeight(Float.parseFloat(editWeight.getText().toString()));
+                mUser.setAge(Integer.parseInt(editAge.getText().toString()));
+                mDBHandler.addUser(mUser);
 
                 Intent i=new Intent(getActivity(), MainTabActivity.class);
                 startActivity(i);

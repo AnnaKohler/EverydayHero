@@ -11,11 +11,10 @@ public class ObjectiveReviewActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         int mode = getIntent().getIntExtra(ObjectiveFragment.EXTRA_OBJECTIVE_MODE, 0);
         if(mode!=2){
-            String objectiveId = getIntent().getStringExtra(ObjectiveFragment.EXTRA_OBJECTIVE_ID);
+            int objectiveId = getIntent().getIntExtra(ObjectiveFragment.EXTRA_OBJECTIVE_ID, 0);
             return ObjectiveFragment.newInstance(objectiveId, mode);
         }
         return ObjectiveFragment.newInstance(mode);
-
 
     }
 }
