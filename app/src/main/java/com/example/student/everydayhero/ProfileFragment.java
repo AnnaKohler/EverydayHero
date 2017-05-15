@@ -52,6 +52,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         avatar=(ImageView)v.findViewById(R.id.imageView);
+        if(mUser.getSex()!=0){
+            avatar.setImageResource(R.drawable.ic_016_nerd);
+        }
         txtName=(TextView)v.findViewById(R.id.txtName);
         txtAge=(TextView)v.findViewById(R.id.dataProfileAge);
         txtBMI=(TextView)v.findViewById(R.id.dataProfileBMI);

@@ -2,6 +2,7 @@ package com.example.student.everydayhero;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -29,6 +30,7 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
     private static final String KEY_DURATION = "obj_duration";
     private static final String KEY_DONE_DAYS = "obj_done_days";
     private static final String KEY_BEG_DATE="obj_begin_date";
+    private static final String KEY_LAST_DONE_DATE="obj_last_done_date";
 
     //TABLE USER:
 
@@ -37,7 +39,9 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
     private static final String KEY_AGE = "age";
     private static final String KEY_HEIGHT = "height";
     private static final String KEY_WEIGHT = "weight";
+    private static final String KEY_SEX = "sex";
     private static final String KEY_LASTSEEN = "lastseen";
+
 
 
     public DBHandler(Context context) {
@@ -50,12 +54,21 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
                 KEY_ID+" INTEGER PRIMARY KEY,"+ KEY_TITLE + " TEXT,"
                 + KEY_GROUP + " TEXT," + KEY_DETAILS + " TEXT," +KEY_BEG_DATE +" INTEGER,"
                 +KEY_DURATION +" INTEGER,"+ KEY_DONE_DAYS +" INTEGER" +")";
+        /*
+        String CREATE_OBJECTIVES_TABLE= "CREATE TABLE "+TABLE_OBJECTIVES+"("+
+                KEY_ID+" INTEGER PRIMARY KEY,"+ KEY_TITLE + " TEXT,"
+                + KEY_GROUP + " TEXT," + KEY_DETAILS + " TEXT," +KEY_BEG_DATE +" INTEGER,"
+                +KEY_DURATION +" INTEGER,"+ KEY_DONE_DAYS +" INTEGER" +")"; //TODO: Реализовать проверку последнего выполнения
+         */
 
         db.execSQL(CREATE_OBJECTIVES_TABLE);
 
         String CREATE_USER_TABLE="CREATE TABLE " + TABLE_USER + "(" + KEY_ID +" bool PRIMARY KEY DEFAULT TRUE," + KEY_NAME+ " TEXT," +KEY_AGE+ " INTEGER,"
-                +KEY_HEIGHT + " REAL," + KEY_WEIGHT + " REAL,"
+                +KEY_HEIGHT + " REAL," + KEY_WEIGHT + " REAL," + KEY_SEX+ " INTEGER,"
                 + KEY_LASTSEEN +" INTEGER" + ")";
+        /*String CREATE_USER_TABLE="CREATE TABLE " + TABLE_USER + "(" + KEY_ID +" bool PRIMARY KEY DEFAULT TRUE," + KEY_NAME+ " TEXT," +KEY_AGE+ " INTEGER,"
+                +KEY_HEIGHT + " REAL," + KEY_WEIGHT + " REAL,"
+                + KEY_LASTSEEN +" INTEGER" + ")"; TODO: отладка*/
         db.execSQL(CREATE_USER_TABLE);
     }
 
@@ -93,6 +106,7 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
         values.put(KEY_AGE, user.getAge());
         values.put(KEY_HEIGHT, user.getHeight());
         values.put(KEY_WEIGHT, user.getWeight());
+        values.put(KEY_SEX, user.getSex());
         values.put(KEY_LASTSEEN, user.getLastSeen().getTime());
 
         db.insert(TABLE_USER, null, values);
@@ -124,7 +138,7 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
                 objective.setDuration(Integer.parseInt(cursor.getString(5)));
                 Log.e("OBJDURATION", "getObjective: " +objective.getDuration());
                 objective.setDone(Integer.parseInt(cursor.getString(6)));
-                Log.e("OBJIDONE", "getObjective: " +objective.getDone());
+                Log.e("OBJDONE", "getObjective: " +objective.getDone());
             }
         return objective;
     }
@@ -139,7 +153,10 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
             user.setAge(Integer.parseInt(cursor.getString(2)));
             user.setHeight(Float.parseFloat(cursor.getString(3)));
             user.setWeight(Float.parseFloat(cursor.getString(4)));
-            user.setLastSeen(new Date(Long.valueOf(cursor.getString(5))));
+
+            //user.setLastSeen(new Date(Long.valueOf(cursor.getString(5))));
+            user.setSex(Integer.parseInt(cursor.getString(5)));
+            user.setLastSeen(new Date(Long.valueOf(cursor.getString(6)))); //TODO: Отладка
             user.getLastSeen().setHours(0);
         }
         return user;
@@ -192,6 +209,7 @@ public class DBHandler extends SQLiteOpenHelper implements IDataBaseHandler {
         cv.put(KEY_AGE, user.getAge());
         cv.put(KEY_HEIGHT, user.getHeight());
         cv.put(KEY_AGE, user.getWeight());
+        cv.put(KEY_SEX, user.getSex());
         cv.put(KEY_LASTSEEN, user.getLastSeen().getTime());
 
         return db.update(TABLE_USER, cv, null, null);

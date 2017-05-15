@@ -1,10 +1,12 @@
 package com.example.student.everydayhero;
 
 import android.content.Intent;
+import java.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class ObjectiveFragment extends Fragment {
 
@@ -52,6 +59,8 @@ public class ObjectiveFragment extends Fragment {
     private EditText durationDays;
     private ImageButton btnDone;
     private DBHandler mDBHandler;
+    private int objectiveId;
+    private EditText startDate;
 
 
 
@@ -63,7 +72,7 @@ public class ObjectiveFragment extends Fragment {
         mDBHandler=new DBHandler(getContext());
 
         if(objectiveMode!=2){
-            int objectiveId=getArguments().getInt(EXTRA_OBJECTIVE_ID);
+            objectiveId=getArguments().getInt(EXTRA_OBJECTIVE_ID);
 
             mObjective=mDBHandler.getAllObjectives().get(objectiveId);
         }
@@ -110,7 +119,7 @@ public class ObjectiveFragment extends Fragment {
                     public void onClick(View view) {
                         Intent i = new Intent(getActivity(), ObjectiveReviewActivity.class);
                         i.putExtra(EXTRA_OBJECTIVE_MODE, 1);
-                        i.putExtra(EXTRA_OBJECTIVE_ID, mObjective.getTitle());
+                        i.putExtra(EXTRA_OBJECTIVE_ID, objectiveId);
                         startActivity(i);
                         getActivity().finish();
 
@@ -136,23 +145,34 @@ public class ObjectiveFragment extends Fragment {
                 durationDays = (EditText) v.findViewById(R.id.editDays);
                 durationDays.setText(mObjective.getDuration() + "");
 
-                /*spnStartDate=(Spinner)v.findViewById(R.id.spnStartingDate);
-
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                        getContext(), R.array.startingDates, android.R.layout.simple_list_item_1);
-                spnStartDate.setAdapter(adapter);*/
-
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(mObjective.getBeginDate());
+                int month=cal.get(Calendar.MONTH)+1;
+                int day=cal.get(Calendar.DAY_OF_MONTH);
+                int year=cal.get(Calendar.YEAR);
+                startDate=(EditText)v.findViewById(R.id.editDate);
+                startDate.setText(day+"/"+month+"/"+year);
                 btnDone = (ImageButton) v.findViewById(R.id.imgButton_done);
                 btnDone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //Updating Objective Details
+
                         mObjective.setTitle(txtTitle.getText().toString());
                         mObjective.setDetails(txtDetails.getText().toString());
                         mObjective.setDuration(Integer.parseInt(durationDays.getText().toString()));
+                        SimpleDateFormat df= new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        try {
+                            mObjective.setBeginDate(df.parse(startDate.getText().toString()));
+                        }catch (ParseException e){
+                            e.printStackTrace();
+                            mObjective.setBeginDate(new Date());
+                        }
                         mDBHandler.updateObjective(mObjective);
+
+
                         Intent i = new Intent(getActivity(), ObjectiveReviewActivity.class);
-                        i.putExtra(EXTRA_OBJECTIVE_ID, mObjective.getTitle());
+                        i.putExtra(EXTRA_OBJECTIVE_ID, objectiveId);
                         i.putExtra(EXTRA_OBJECTIVE_MODE, 0);
                         startActivity(i);
                         getActivity().finish();
@@ -179,15 +199,24 @@ public class ObjectiveFragment extends Fragment {
                 durationDays = (EditText) v.findViewById(R.id.editDays);
                 durationDays.setHint("21");
 
+                startDate=(EditText) v.findViewById(R.id.editDate);
                 btnDone = (ImageButton) v.findViewById(R.id.imgButton_done);
                 btnDone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //Updating Objective Details
+
                         mObjective=new Objective();
                         mObjective.setTitle(txtTitle.getText().toString());
                         mObjective.setDetails(txtDetails.getText().toString());
 
+                        SimpleDateFormat df= new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        try {
+                            mObjective.setBeginDate(df.parse(startDate.getText().toString()));
+                        }catch (ParseException e){
+                            e.printStackTrace();
+                            mObjective.setBeginDate(new Date());
+                        }
                         if (mObjective.getTitle().equals("")){
                             Toast toast = Toast.makeText(getActivity(),
                                     "Enter the objective's title!", Toast.LENGTH_SHORT);

@@ -1,5 +1,6 @@
 package com.example.student.everydayhero;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Objective {
@@ -10,6 +11,7 @@ public class Objective {
     private int duration;
     private int doneDays;
     private Date beginDate;
+    private Date lastDoneDate;
 
 
     Objective(String s){
@@ -17,12 +19,20 @@ public class Objective {
         this.duration=1;
         this.Details="";
         beginDate=new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, -1);
+        this.lastDoneDate = cal.getTime();
     }
     Objective(){
         this.Title="";
         this.duration=1;
         this.Details="";
         beginDate=new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, -1);
+        this.lastDoneDate = cal.getTime();
 
     }
     public String getGroup() { return Group; }
@@ -77,5 +87,21 @@ public class Objective {
 
     public void setID(int id) {
         this._id = id;
+    }
+
+    public int getDoneDays() {
+        return doneDays;
+    }
+
+    public void setDoneDays(int doneDays) {
+        this.doneDays = doneDays;
+    }
+
+    public Date getLastDoneDate() {
+        return lastDoneDate;
+    }
+
+    public void setLastDoneDate(Date lastDoneDate) {
+        this.lastDoneDate = lastDoneDate;
     }
 }

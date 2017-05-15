@@ -154,7 +154,7 @@
         android:layout_height="wrap_content"
         android:inputType="date"
 
-        android:id="@+id/editText2"
+        android:id="@+id/editDate"
         android:hint="01/01/2000"
         android:layout_alignBaseline="@+id/txtDurationStarting"
         android:layout_alignBottom="@+id/txtDurationStarting"

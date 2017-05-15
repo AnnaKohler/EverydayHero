@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EverydayHero</string>
+    <string name="app_name">GoHero</string>
 
     <string name="title_activity_objective_list">Your Objectives</string>
     <string name="ReviewActivityTitle">Objective Review</string>
@@ -20,7 +20,7 @@
         <item>Tomorrow</item>
         <item>Pick Date&#8230;</item>
     </string-array>
-    <string name="title_activity_main_tab">EverydayHero</string>
+    <string name="title_activity_main_tab">GoHero</string>
 
     <!--MainTabActivity-->
     <string name="sectGoals">OBJECTIVES</string>

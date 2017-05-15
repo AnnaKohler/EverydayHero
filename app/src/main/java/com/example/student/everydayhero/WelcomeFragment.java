@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 /**
  * Created by Anna on 24.03.2017.
@@ -40,6 +41,26 @@ public class WelcomeFragment extends Fragment {
         editWeight=(EditText)v.findViewById(R.id.editWeight);
         editAge=(EditText)v.findViewById(R.id.editAge);
 
+        final RadioButton maleBtn=(RadioButton) v.findViewById(R.id.radioButton5);
+        final RadioButton femaleBtn=(RadioButton) v.findViewById(R.id.radioButton4);
+
+        maleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mUser.setSex(1);
+                femaleBtn.setActivated(false);
+            }
+
+        });
+
+        femaleBtn.setOnClickListener(new View.OnClickListener() { //TODO: отладка
+            @Override
+            public void onClick(View view) {
+                mUser.setSex(0);
+                maleBtn.setActivated(false);
+            }
+
+        });
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +76,7 @@ public class WelcomeFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
         return v;
     }
 }

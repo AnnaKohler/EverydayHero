@@ -7,6 +7,7 @@ import java.util.Date;
  */
 
 public class User {
+    private int sex;
     private int age;
     private String name;
     private Date lastSeen;
@@ -25,6 +26,7 @@ public class User {
         lastSeen.setHours(0);
         weight=1;
         height=1;
+        sex=0;
     }
 
 
@@ -66,5 +68,13 @@ public class User {
 
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 }
